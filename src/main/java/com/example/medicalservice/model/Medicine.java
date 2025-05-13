@@ -23,7 +23,7 @@ public class Medicine {
     private String medicineId;
 
     @Column(name = "m_name")
-    private String medicine_Name;
+    private String medicineName;
 
     @Column(name = "m_category")
     private String medicineCategory;
