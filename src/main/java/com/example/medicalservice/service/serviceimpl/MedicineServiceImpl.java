@@ -106,6 +106,13 @@ public class MedicineServiceImpl implements MedicineService {
                 ));
     }
 
+    @Override
+    public String deleteMedicineById(String medicineId) {
+        Medicine medicine = medicineRepository.findMedicineById(medicineId).orElseThrow();
+        medicineRepository.delete(medicine);
+        return "Medicine with Id:"+medicine.getMedicineId()+"was Deleted.";
+    }
+
 
     private MedicineResponse mapToMedicineResponse(Medicine medicine1) {
         return MedicineResponse.builder()
