@@ -73,24 +73,38 @@ public class MedicineServiceImpl implements MedicineService {
                 ));
     }
 
+    @Override
+    public ResponseEntity<MedicineResponse> updateMedicineById(String medicineId, MedicineRequest medicineRequest) {
+        Medicine medicine = medicineRepository.findMedicineById(medicineId).orElseThrow();
 
+        medicine.setMedicineName(medicineRequest.getMedicineName());
+        medicine.setMedicineCategory(medicineRequest.getMedicineCategory());
+        medicine.setMedicineIngredients(medicineRequest.getMedicineIngredients());
+        medicine.setDosageInMg(medicineRequest.getDosageInMg());
+        medicine.setForm(medicineRequest.getForm());
+        medicine.setManufacturer(medicineRequest.getManufacturer());
+        medicine.setStockQuantity(medicineRequest.getStockQuantity());
+        medicine.setExpireDate(medicineRequest.getExpireDate());
+        medicine.setPrice(medicineRequest.getPrice());
+        medicine.setPharmacyId(medicineRequest.getPharmacyId());
 
+        Medicine saved = medicineRepository.save(medicine);
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        return ResponseEntity.ok(
+                new MedicineResponse(
+                        saved.getMedicineId(),
+                        saved.getMedicineName(),
+                        saved.getMedicineCategory(),
+                        saved.getMedicineIngredients(),
+                        saved.getDosageInMg(),
+                        saved.getForm(),
+                        saved.getManufacturer(),
+                        saved.getStockQuantity(),
+                        saved.getExpireDate(),
+                        saved.getPrice(),
+                        saved.getPharmacyId()
+                ));
+    }
 
 
     private MedicineResponse mapToMedicineResponse(Medicine medicine1) {
