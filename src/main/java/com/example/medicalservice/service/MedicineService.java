@@ -5,6 +5,10 @@ import com.example.medicalservice.dto.MedicineResponse;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 
+import java.util.List;
+
 public interface MedicineService {
     ResponseEntity<MedicineResponse> addMedicine(@Valid MedicineRequest medicineRequest);
+
+    List<MedicineResponse> getListOfAllMedicines();
 }

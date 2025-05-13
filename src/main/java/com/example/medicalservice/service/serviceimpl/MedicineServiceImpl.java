@@ -9,6 +9,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class MedicineServiceImpl implements MedicineService {
@@ -43,6 +45,49 @@ public class MedicineServiceImpl implements MedicineService {
                         saved.getPrice(),
                         saved.getPharmacyId()
                 ));
+    }
+
+    @Override
+    public List<MedicineResponse> getListOfAllMedicines() {
+       List<Medicine>  medicine = medicineRepository.findAll();
+        return medicine.stream().map(this::mapToMedicineResponse).toList();
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    private MedicineResponse mapToMedicineResponse(Medicine medicine1) {
+        return MedicineResponse.builder()
+                .medicineId(medicine1.getMedicineId())
+                .medicineName(medicine1.getMedicineName())
+                .medicineCategory(medicine1.getMedicineCategory())
+                .medicineIngredients(medicine1.getMedicineIngredients())
+                .form(medicine1.getForm())
+                .dosageInMg(medicine1.getDosageInMg())
+                .manufacturer(medicine1.getManufacturer())
+                .stockQuantity(medicine1.getStockQuantity())
+                .expireDate(medicine1.getExpireDate())
+                .price(medicine1.getPrice())
+                .pharmacyId(medicine1.getPharmacyId())
+                .build();
     }
 
 
