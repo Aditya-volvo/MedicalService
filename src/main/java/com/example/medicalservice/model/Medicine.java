@@ -52,5 +52,7 @@ public class Medicine {
     @Column(name = "m_price")
     private Double price;
 
+    // Link to pharmacy-service by ID
+    private String pharmacyId;
 
 }
