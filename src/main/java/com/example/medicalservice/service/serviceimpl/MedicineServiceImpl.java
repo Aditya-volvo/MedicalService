@@ -5,6 +5,7 @@ import com.example.medicalservice.dto.MedicineResponse;
 import com.example.medicalservice.mapper.GlobalMapper;
 import com.example.medicalservice.model.Medicine;
 import com.example.medicalservice.repository.MedicineRepository;
+import com.example.medicalservice.response.GlobalResponseEntity;
 import com.example.medicalservice.service.MedicineService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +19,7 @@ import java.util.List;
 public class MedicineServiceImpl implements MedicineService {
     private final MedicineRepository medicineRepository;
     private final GlobalMapper globalMapper;
+    private final GlobalResponseEntity globalResponseEntity;
     @Override
     public ResponseEntity<MedicineResponse> addMedicine(MedicineRequest medicineRequest) {
         Medicine medicine = Medicine.builder()
@@ -34,20 +36,7 @@ public class MedicineServiceImpl implements MedicineService {
                 .build();
         Medicine saved = medicineRepository.save(medicine);
 
-        return ResponseEntity.ok(
-                new MedicineResponse(
-                        saved.getMedicineId(),
-                        saved.getMedicineName(),
-                        saved.getMedicineCategory(),
-                        saved.getMedicineIngredients(),
-                        saved.getDosageInMg(),
-                        saved.getForm(),
-                        saved.getManufacturer(),
-                        saved.getStockQuantity(),
-                        saved.getExpireDate(),
-                        saved.getPrice(),
-                        saved.getPharmacyId()
-                ));
+        return globalResponseEntity.ok(saved);
     }
 
     @Override
@@ -59,20 +48,7 @@ public class MedicineServiceImpl implements MedicineService {
     @Override
     public ResponseEntity<MedicineResponse> getMedicineById(String medicineId) {
         Medicine medicine = medicineRepository.findMedicineById(medicineId).orElseThrow();
-        return ResponseEntity.ok(
-                new MedicineResponse(
-                        medicine.getMedicineId(),
-                        medicine.getMedicineName(),
-                        medicine.getMedicineCategory(),
-                        medicine.getMedicineIngredients(),
-                        medicine.getDosageInMg(),
-                        medicine.getForm(),
-                        medicine.getManufacturer(),
-                        medicine.getStockQuantity(),
-                        medicine.getExpireDate(),
-                        medicine.getPrice(),
-                        medicine.getPharmacyId()
-                ));
+       return globalResponseEntity.ok(medicine);
     }
 
     @Override
@@ -92,20 +68,7 @@ public class MedicineServiceImpl implements MedicineService {
 
         Medicine saved = medicineRepository.save(medicine);
 
-        return ResponseEntity.ok(
-                new MedicineResponse(
-                        saved.getMedicineId(),
-                        saved.getMedicineName(),
-                        saved.getMedicineCategory(),
-                        saved.getMedicineIngredients(),
-                        saved.getDosageInMg(),
-                        saved.getForm(),
-                        saved.getManufacturer(),
-                        saved.getStockQuantity(),
-                        saved.getExpireDate(),
-                        saved.getPrice(),
-                        saved.getPharmacyId()
-                ));
+        return globalResponseEntity.ok(saved);
     }
 
     @Override
