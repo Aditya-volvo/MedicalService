@@ -1,5 +1,6 @@
 package com.example.medicalservice.mapper;
 
+import com.example.medicalservice.dto.MedicineRequest;
 import com.example.medicalservice.dto.MedicineResponse;
 import com.example.medicalservice.model.Medicine;
 
@@ -17,6 +18,21 @@ public class GlobalMapper {
                 .expireDate(medicine1.getExpireDate())
                 .price(medicine1.getPrice())
                 .pharmacyId(medicine1.getPharmacyId())
+                .build();
+    }
+
+    public Medicine mapMedicineRequestToMedicine(MedicineRequest medicineRequest){
+        return Medicine.builder()
+                .medicineName(medicineRequest.getMedicineName())
+                .medicineCategory(medicineRequest.getMedicineCategory())
+                .medicineIngredients(medicineRequest.getMedicineIngredients())
+                .dosageInMg(medicineRequest.getDosageInMg())
+                .form(medicineRequest.getForm())
+                .manufacturer(medicineRequest.getManufacturer())
+                .stockQuantity(medicineRequest.getStockQuantity())
+                .expireDate(medicineRequest.getExpireDate())
+                .price(medicineRequest.getPrice())
+                .pharmacyId(medicineRequest.getPharmacyId())
                 .build();
     }
 }
