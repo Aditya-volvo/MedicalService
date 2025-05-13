@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/medicine")
 @RequiredArgsConstructor
@@ -21,5 +23,9 @@ public class MedicineController {
     @PostMapping
     public ResponseEntity<MedicineResponse> addMedicine(@Valid @RequestBody MedicineRequest medicineRequest){
     return medicineService.addMedicine(medicineRequest);
+    }
+
+    public List<MedicineResponse> getListOfAllMedicines(){
+        return medicineService.getListOfAllMedicines();
     }
 }
