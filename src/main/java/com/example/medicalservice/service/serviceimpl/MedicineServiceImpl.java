@@ -2,6 +2,7 @@ package com.example.medicalservice.service.serviceimpl;
 
 import com.example.medicalservice.dto.MedicineRequest;
 import com.example.medicalservice.dto.MedicineResponse;
+import com.example.medicalservice.exception.MedicineNotFoundException;
 import com.example.medicalservice.mapper.GlobalMapper;
 import com.example.medicalservice.model.Medicine;
 import com.example.medicalservice.repository.MedicineRepository;
@@ -22,18 +23,8 @@ public class MedicineServiceImpl implements MedicineService {
     private final GlobalResponseEntity globalResponseEntity;
     @Override
     public ResponseEntity<MedicineResponse> addMedicine(MedicineRequest medicineRequest) {
-        Medicine medicine = Medicine.builder()
-                .medicineName(medicineRequest.getMedicineName())
-                .medicineCategory(medicineRequest.getMedicineCategory())
-                .medicineIngredients(medicineRequest.getMedicineIngredients())
-                .dosageInMg(medicineRequest.getDosageInMg())
-                .form(medicineRequest.getForm())
-                .manufacturer(medicineRequest.getManufacturer())
-                .stockQuantity(medicineRequest.getStockQuantity())
-                .expireDate(medicineRequest.getExpireDate())
-                .price(medicineRequest.getPrice())
-                .pharmacyId(medicineRequest.getPharmacyId())
-                .build();
+        Medicine medicine = globalMapper.mapMedicineRequestToMedicine(medicineRequest);
+
         Medicine saved = medicineRepository.save(medicine);
 
         return globalResponseEntity.ok(saved);
@@ -47,13 +38,15 @@ public class MedicineServiceImpl implements MedicineService {
 
     @Override
     public ResponseEntity<MedicineResponse> getMedicineById(String medicineId) {
-        Medicine medicine = medicineRepository.findMedicineById(medicineId).orElseThrow();
+        Medicine medicine = medicineRepository.findMedicineById(medicineId)
+                .orElseThrow(()-> new MedicineNotFoundException("Medicine with ID:"+medicineId+"Not Found"));
        return globalResponseEntity.ok(medicine);
     }
 
     @Override
     public ResponseEntity<MedicineResponse> updateMedicineById(String medicineId, MedicineRequest medicineRequest) {
-        Medicine medicine = medicineRepository.findMedicineById(medicineId).orElseThrow();
+        Medicine medicine = medicineRepository.findMedicineById(medicineId)
+                .orElseThrow(()-> new MedicineNotFoundException("Medicine with ID:"+medicineId+"Not Found"));
 
         medicine.setMedicineName(medicineRequest.getMedicineName());
         medicine.setMedicineCategory(medicineRequest.getMedicineCategory());
@@ -73,7 +66,8 @@ public class MedicineServiceImpl implements MedicineService {
 
     @Override
     public String deleteMedicineById(String medicineId) {
-        Medicine medicine = medicineRepository.findMedicineById(medicineId).orElseThrow();
+        Medicine medicine = medicineRepository.findMedicineById(medicineId)
+                .orElseThrow(()-> new MedicineNotFoundException("Medicine with ID:"+medicineId+"Not Found"));
         medicineRepository.delete(medicine);
         return "Medicine with Id:"+medicine.getMedicineId()+"was Deleted.";
     }
