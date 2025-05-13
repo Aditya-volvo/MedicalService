@@ -8,6 +8,7 @@ import com.example.medicalservice.service.MedicineService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.GetMapping;
 
 import java.util.List;
 
@@ -48,6 +49,7 @@ public class MedicineServiceImpl implements MedicineService {
     }
 
     @Override
+    @GetMapping
     public List<MedicineResponse> getListOfAllMedicines() {
        List<Medicine>  medicine = medicineRepository.findAll();
         return medicine.stream().map(this::mapToMedicineResponse).toList();
