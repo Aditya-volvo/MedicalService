@@ -7,10 +7,7 @@ import com.example.medicalservice.service.MedicineService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -25,7 +22,14 @@ public class MedicineController {
     return medicineService.addMedicine(medicineRequest);
     }
 
+    @GetMapping
     public List<MedicineResponse> getListOfAllMedicines(){
         return medicineService.getListOfAllMedicines();
     }
+
+    @GetMapping("/{medicineId}")
+    public ResponseEntity<MedicineResponse> getMedicineById(@PathVariable String medicineId){
+        return medicineService.getMedicineById(medicineId);
+    }
+
 }
