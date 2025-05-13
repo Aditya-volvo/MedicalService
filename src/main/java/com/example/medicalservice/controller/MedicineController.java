@@ -36,4 +36,10 @@ public class MedicineController {
     public ResponseEntity<MedicineResponse> upadateMedicineById(@PathVariable String medicineId, @RequestBody MedicineRequest medicineRequest){
         return medicineService.updateMedicineById(medicineId,medicineRequest);
     }
+
+    @DeleteMapping("/{medicineId}")
+    public String deleteMedicineById(@PathVariable String medicineId){
+        return  medicineService.deleteMedicineById(medicineId);
+    }
+
 }
