@@ -2,6 +2,7 @@ package com.example.medicalservice.service.serviceimpl;
 
 import com.example.medicalservice.dto.MedicineRequest;
 import com.example.medicalservice.dto.MedicineResponse;
+import com.example.medicalservice.mapper.GlobalMapper;
 import com.example.medicalservice.model.Medicine;
 import com.example.medicalservice.repository.MedicineRepository;
 import com.example.medicalservice.service.MedicineService;
@@ -16,6 +17,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class MedicineServiceImpl implements MedicineService {
     private final MedicineRepository medicineRepository;
+    private final GlobalMapper globalMapper;
     @Override
     public ResponseEntity<MedicineResponse> addMedicine(MedicineRequest medicineRequest) {
         Medicine medicine = Medicine.builder()
@@ -51,7 +53,7 @@ public class MedicineServiceImpl implements MedicineService {
     @Override
     public List<MedicineResponse> getListOfAllMedicines() {
        List<Medicine>  medicine = medicineRepository.findAll();
-        return medicine.stream().map(this::mapToMedicineResponse).toList();
+        return medicine.stream().map(globalMapper::mapToMedicineResponse).toList();
     }
 
     @Override
@@ -112,23 +114,4 @@ public class MedicineServiceImpl implements MedicineService {
         medicineRepository.delete(medicine);
         return "Medicine with Id:"+medicine.getMedicineId()+"was Deleted.";
     }
-
-
-    private MedicineResponse mapToMedicineResponse(Medicine medicine1) {
-        return MedicineResponse.builder()
-                .medicineId(medicine1.getMedicineId())
-                .medicineName(medicine1.getMedicineName())
-                .medicineCategory(medicine1.getMedicineCategory())
-                .medicineIngredients(medicine1.getMedicineIngredients())
-                .form(medicine1.getForm())
-                .dosageInMg(medicine1.getDosageInMg())
-                .manufacturer(medicine1.getManufacturer())
-                .stockQuantity(medicine1.getStockQuantity())
-                .expireDate(medicine1.getExpireDate())
-                .price(medicine1.getPrice())
-                .pharmacyId(medicine1.getPharmacyId())
-                .build();
-    }
-
-
 }
