@@ -49,12 +49,29 @@ public class MedicineServiceImpl implements MedicineService {
     }
 
     @Override
-    @GetMapping
     public List<MedicineResponse> getListOfAllMedicines() {
        List<Medicine>  medicine = medicineRepository.findAll();
         return medicine.stream().map(this::mapToMedicineResponse).toList();
     }
 
+    @Override
+    public ResponseEntity<MedicineResponse> getMedicineById(String medicineId) {
+        Medicine medicine = medicineRepository.findMedicineById(medicineId).orElseThrow();
+        return ResponseEntity.ok(
+                new MedicineResponse(
+                        medicine.getMedicineId(),
+                        medicine.getMedicineName(),
+                        medicine.getMedicineCategory(),
+                        medicine.getMedicineIngredients(),
+                        medicine.getDosageInMg(),
+                        medicine.getForm(),
+                        medicine.getManufacturer(),
+                        medicine.getStockQuantity(),
+                        medicine.getExpireDate(),
+                        medicine.getPrice(),
+                        medicine.getPharmacyId()
+                ));
+    }
 
 
 

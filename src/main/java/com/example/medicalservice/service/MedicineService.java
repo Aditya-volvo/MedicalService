@@ -11,4 +11,6 @@ public interface MedicineService {
     ResponseEntity<MedicineResponse> addMedicine(@Valid MedicineRequest medicineRequest);
 
     List<MedicineResponse> getListOfAllMedicines();
+
+    ResponseEntity<MedicineResponse> getMedicineById(String medicineId);
 }
