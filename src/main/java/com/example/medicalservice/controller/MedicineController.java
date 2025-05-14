@@ -28,17 +28,17 @@ public class MedicineController {
     }
 
     @GetMapping("/{medicineId}")
-    public ResponseEntity<MedicineResponse> getMedicineById(@PathVariable String medicineId){
+    public ResponseEntity<MedicineResponse> getMedicineById(@PathVariable Long medicineId){
         return medicineService.getMedicineById(medicineId);
     }
 
     @PutMapping("/{medicineId}")
-    public ResponseEntity<MedicineResponse> upadateMedicineById(@PathVariable String medicineId, @RequestBody MedicineRequest medicineRequest){
+    public ResponseEntity<MedicineResponse> upadateMedicineById(@PathVariable Long medicineId, @RequestBody MedicineRequest medicineRequest){
         return medicineService.updateMedicineById(medicineId,medicineRequest);
     }
 
     @DeleteMapping("/{medicineId}")
-    public String deleteMedicineById(@PathVariable String medicineId){
+    public String deleteMedicineById(@PathVariable Long medicineId){
         return  medicineService.deleteMedicineById(medicineId);
     }
 

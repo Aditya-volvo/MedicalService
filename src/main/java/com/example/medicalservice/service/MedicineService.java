@@ -12,9 +12,9 @@ public interface MedicineService {
 
     List<MedicineResponse> getListOfAllMedicines();
 
-    ResponseEntity<MedicineResponse> getMedicineById(String medicineId);
+    ResponseEntity<MedicineResponse> getMedicineById(Long medicineId);
 
-    ResponseEntity<MedicineResponse> updateMedicineById(String medicineId, MedicineRequest medicineRequest);
+    ResponseEntity<MedicineResponse> updateMedicineById(Long medicineId, MedicineRequest medicineRequest);
 
-    String deleteMedicineById(String medicineId);
+    String deleteMedicineById(Long medicineId);
 }

@@ -37,14 +37,14 @@ public class MedicineServiceImpl implements MedicineService {
     }
 
     @Override
-    public ResponseEntity<MedicineResponse> getMedicineById(String medicineId) {
+    public ResponseEntity<MedicineResponse> getMedicineById(Long medicineId) {
         Medicine medicine = medicineRepository.findMedicineById(medicineId)
                 .orElseThrow(()-> new MedicineNotFoundException("Medicine with ID:"+medicineId+"Not Found"));
        return globalResponseEntity.ok(medicine);
     }
 
     @Override
-    public ResponseEntity<MedicineResponse> updateMedicineById(String medicineId, MedicineRequest medicineRequest) {
+    public ResponseEntity<MedicineResponse> updateMedicineById(Long medicineId, MedicineRequest medicineRequest) {
         Medicine medicine = medicineRepository.findMedicineById(medicineId)
                 .orElseThrow(()-> new MedicineNotFoundException("Medicine with ID:"+medicineId+"Not Found"));
 
@@ -65,7 +65,7 @@ public class MedicineServiceImpl implements MedicineService {
     }
 
     @Override
-    public String deleteMedicineById(String medicineId) {
+    public String deleteMedicineById(Long medicineId) {
         Medicine medicine = medicineRepository.findMedicineById(medicineId)
                 .orElseThrow(()-> new MedicineNotFoundException("Medicine with ID:"+medicineId+"Not Found"));
         medicineRepository.delete(medicine);
