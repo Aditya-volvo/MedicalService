@@ -1,1 +1,13 @@
-spring.application.name=MedicalService
+spring:
+  application:
+   name: MedicalService
+
+server:
+  port: 8082
+
+eureka:
+  client:
+    service-url:
+      default-Zone: http://lovalhost:8761/eureka/
+
+
