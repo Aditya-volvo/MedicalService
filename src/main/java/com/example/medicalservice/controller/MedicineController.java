@@ -32,6 +32,10 @@ public class MedicineController {
         return medicineService.getMedicineById(medicineId);
     }
 
+    public List<Medicine> getMedicineByPharmacyId(@PathVariable Long pharmacyId){
+        return medicineService.getMedicineByPharmacyId(pharmacyId);
+    }
+
     @PutMapping("/{medicineId}")
     public ResponseEntity<MedicineResponse> upadateMedicineById(@PathVariable Long medicineId, @RequestBody MedicineRequest medicineRequest){
         return medicineService.updateMedicineById(medicineId,medicineRequest);
