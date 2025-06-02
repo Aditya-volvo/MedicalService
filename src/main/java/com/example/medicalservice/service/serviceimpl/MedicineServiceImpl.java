@@ -1,5 +1,6 @@
 package com.example.medicalservice.service.serviceimpl;
 
+import com.example.medicalservice.client.PharmacyClient;
 import com.example.medicalservice.dto.MedicineRequest;
 import com.example.medicalservice.dto.MedicineResponse;
 import com.example.medicalservice.exception.MedicineNotFoundException;
@@ -11,7 +12,7 @@ import com.example.medicalservice.service.MedicineService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.GetMapping;
+
 
 import java.util.List;
 
@@ -21,8 +22,13 @@ public class MedicineServiceImpl implements MedicineService {
     private final MedicineRepository medicineRepository;
     private final GlobalMapper globalMapper;
     private final GlobalResponseEntity globalResponseEntity;
+    private final PharmacyClient pharmacyClient;
     @Override
     public ResponseEntity<MedicineResponse> addMedicine(MedicineRequest medicineRequest) {
+        // Check if the pharmacy exists before adding the medicine
+        if (medicineRequest.getPharmacyId() != null) {
+            pharmacyClient.getPharmacyById(medicineRequest.getPharmacyId());
+        }
         Medicine medicine = globalMapper.mapMedicineRequestToMedicine(medicineRequest);
 
         Medicine saved = medicineRepository.save(medicine);
@@ -70,5 +76,14 @@ public class MedicineServiceImpl implements MedicineService {
                 .orElseThrow(()-> new MedicineNotFoundException("Medicine with ID:"+medicineId+"Not Found"));
         medicineRepository.delete(medicine);
         return "Medicine with Id:"+medicine.getMedicineId()+"was Deleted.";
+    }
+
+    @Override
+    public List<Medicine> getMedicineByPharmacyId(Long pharmacyId) {
+        // Check if the pharmacy exists before fetching medicines
+        pharmacyClient.getPharmacyById(pharmacyId);
+        // Fetch medicines by pharmacy ID
+        return medicineRepository.findMedicineByPharmacyId(pharmacyId);
+
     }
 }

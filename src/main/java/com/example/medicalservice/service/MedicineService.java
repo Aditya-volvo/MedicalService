@@ -2,6 +2,7 @@ package com.example.medicalservice.service;
 
 import com.example.medicalservice.dto.MedicineRequest;
 import com.example.medicalservice.dto.MedicineResponse;
+import com.example.medicalservice.model.Medicine;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 
@@ -17,4 +18,6 @@ public interface MedicineService {
     ResponseEntity<MedicineResponse> updateMedicineById(Long medicineId, MedicineRequest medicineRequest);
 
     String deleteMedicineById(Long medicineId);
+
+    List<Medicine> getMedicineByPharmacyId(Long pharmacyId);
 }
