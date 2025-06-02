@@ -53,6 +53,6 @@ public class Medicine {
     private Double price;
 
     // Link to pharmacy-service by ID
-    private String pharmacyId;
+    private Long pharmacyId;
 
 }

@@ -25,5 +25,5 @@ public class MedicineResponse {
     private int stockQuantity;
     private LocalDate expireDate;
     private Double price;
-    private String pharmacyId;
+    private Long pharmacyId;
 }

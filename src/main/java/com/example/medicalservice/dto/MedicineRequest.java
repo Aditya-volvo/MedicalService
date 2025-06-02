@@ -44,5 +44,5 @@ public class MedicineRequest {
     private Double price;
 
     @NotBlank
-    private String pharmacyId;
+    private Long pharmacyId;
 }
